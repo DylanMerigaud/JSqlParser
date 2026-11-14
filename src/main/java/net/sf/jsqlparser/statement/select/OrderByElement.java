@@ -22,6 +22,7 @@ public class OrderByElement extends ASTNodeAccessImpl {
     private boolean ascDescPresent = false;
     private NullOrdering nullOrdering;
     private WithFill withFill;
+    private String usingOperator;
 
     public boolean isAsc() {
         return asc;
@@ -50,6 +51,23 @@ public class OrderByElement extends ASTNodeAccessImpl {
 
     public OrderByElement withWithFill(WithFill withFill) {
         setWithFill(withFill);
+        return this;
+    }
+
+    /**
+     * Returns the operator of a PostgreSQL {@code USING} sort, as in {@code ORDER BY b USING <}, or
+     * {@code null} when the element has none.
+     */
+    public String getUsingOperator() {
+        return usingOperator;
+    }
+
+    public void setUsingOperator(String usingOperator) {
+        this.usingOperator = usingOperator;
+    }
+
+    public OrderByElement withUsingOperator(String usingOperator) {
+        this.setUsingOperator(usingOperator);
         return this;
     }
 
@@ -82,6 +100,9 @@ public class OrderByElement extends ASTNodeAccessImpl {
             b.append(" DESC");
         } else if (ascDescPresent) {
             b.append(" ASC");
+        }
+        if (usingOperator != null) {
+            b.append(" USING ").append(usingOperator);
         }
 
         if (nullOrdering != null) {
