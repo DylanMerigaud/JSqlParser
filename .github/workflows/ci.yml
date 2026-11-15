@@ -2,9 +2,7 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ "**" ]
-  pull_request:
-    branches: [ "**" ]
+    branches: [ci/fix/2925-order-by-using]
   workflow_dispatch:
 
 # Least privilege by default; each job widens only what it needs.
